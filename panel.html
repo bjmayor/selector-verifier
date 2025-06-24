@@ -1,0 +1,296 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Selector Verifier Panel</title>
+        <style>
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+                margin: 0;
+                padding: 20px;
+                background-color: #f5f5f5;
+            }
+
+            .container {
+                max-width: 800px;
+                margin: 0 auto;
+                background: white;
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                color: #333;
+                margin-top: 0;
+                border-bottom: 2px solid #4caf50;
+                padding-bottom: 10px;
+            }
+
+            .input-section {
+                margin-bottom: 20px;
+            }
+
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: #555;
+            }
+
+            #selectorInput {
+                width: 100%;
+                padding: 10px;
+                border: 2px solid #ddd;
+                border-radius: 4px;
+                font-family: "Courier New", monospace;
+                font-size: 14px;
+                box-sizing: border-box;
+            }
+
+            #selectorInput:focus {
+                outline: none;
+                border-color: #4caf50;
+            }
+
+            .button-group {
+                margin: 15px 0;
+            }
+
+            button {
+                background-color: #4caf50;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                margin-right: 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 14px;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            button:disabled {
+                background-color: #cccccc;
+                cursor: not-allowed;
+            }
+
+            #clearBtn {
+                background-color: #f44336;
+            }
+
+            #clearBtn:hover {
+                background-color: #da190b;
+            }
+
+            .results-section {
+                margin-top: 20px;
+            }
+
+            #results {
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 15px;
+                min-height: 100px;
+                font-family: "Courier New", monospace;
+                font-size: 12px;
+                white-space: pre-wrap;
+            }
+
+            .status {
+                padding: 10px;
+                border-radius: 4px;
+                margin: 10px 0;
+            }
+
+            .status.success {
+                background-color: #d4edda;
+                color: #155724;
+                border: 1px solid #c3e6cb;
+            }
+
+            .status.error {
+                background-color: #f8d7da;
+                color: #721c24;
+                border: 1px solid #f5c6cb;
+            }
+
+            .status.info {
+                background-color: #d1ecf1;
+                color: #0c5460;
+                border: 1px solid #bee5eb;
+            }
+
+            .element-highlight {
+                background-color: yellow;
+                border: 2px solid red;
+            }
+
+            .shortcuts-info {
+                background-color: #f0f8ff;
+                border-left: 4px solid #2196f3;
+                padding: 15px;
+                margin: 15px 0;
+                border-radius: 4px;
+            }
+
+            /* Compact mode styles */
+            .compact-mode {
+                max-width: 320px;
+                margin: 0;
+                padding: 10px;
+            }
+
+            .compact-mode .container {
+                padding: 15px;
+                box-shadow: none;
+                border: 1px solid #e0e0e0;
+            }
+
+            .compact-mode h1 {
+                font-size: 16px;
+                margin-bottom: 10px;
+                padding-bottom: 5px;
+            }
+
+            .compact-mode .shortcuts-info {
+                padding: 10px;
+                margin: 10px 0;
+                font-size: 11px;
+            }
+
+            .compact-mode #selectorInput {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .compact-mode button {
+                font-size: 12px;
+                padding: 8px 15px;
+            }
+
+            .compact-mode #results {
+                font-size: 10px;
+                max-height: 200px;
+            }
+
+            .compact-toggle {
+                position: absolute;
+                top: 10px;
+                right: 20px;
+                background: #2196f3;
+                color: white;
+                border: none;
+                padding: 5px 10px;
+                border-radius: 3px;
+                cursor: pointer;
+                font-size: 11px;
+                z-index: 1000;
+            }
+
+            .compact-toggle:hover {
+                background: #1976d2;
+            }
+
+            .shortcuts-info h4 {
+                margin-top: 0;
+                color: #1976d2;
+            }
+
+            .shortcuts-info ul {
+                margin: 10px 0;
+                padding-left: 20px;
+            }
+
+            .shortcuts-info ul ul {
+                margin: 5px 0;
+            }
+
+            .shortcuts-info li {
+                margin: 5px 0;
+                font-size: 13px;
+            }
+
+            kbd {
+                background-color: #f4f4f4;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+                box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+                color: #333;
+                display: inline-block;
+                font-family: monospace;
+                font-size: 11px;
+                line-height: 1.4;
+                margin: 0 2px;
+                padding: 1px 4px;
+                white-space: nowrap;
+            }
+        </style>
+    </head>
+    <body>
+        <button class="compact-toggle" id="compactToggle">
+            📱 Compact Mode
+        </button>
+        <div class="container">
+            <h1>🎯 Selector Verifier</h1>
+
+            <div class="input-section">
+                <label for="selectorInput">CSS Selector:</label>
+                <input
+                    type="text"
+                    id="selectorInput"
+                    placeholder="Enter CSS selector (e.g., .class-name, #id, div > p)"
+                />
+            </div>
+
+            <div class="button-group">
+                <button id="testBtn">Test Selector</button>
+                <button id="highlightBtn">Highlight Elements</button>
+                <button id="clearBtn">Clear Highlights</button>
+            </div>
+
+            <div class="shortcuts-info" id="shortcutsInfo">
+                <h4>💡 Tips & Shortcuts:</h4>
+                <ul>
+                    <li>
+                        <strong>Auto-detect:</strong> Copy a CSS selector - it
+                        will be automatically detected and tested
+                    </li>
+                    <li>
+                        <strong>Selected element:</strong> Click "Use Selected
+                        Element" to test the currently selected element in
+                        DevTools
+                    </li>
+                    <li>
+                        <strong>Keyboard shortcuts:</strong>
+                        <ul>
+                            <li><kbd>Ctrl/Cmd + Enter</kbd> - Test selector</li>
+                            <li>
+                                <kbd>Ctrl/Cmd + Shift + H</kbd> - Highlight
+                                elements
+                            </li>
+                            <li>
+                                <kbd>Ctrl/Cmd + Shift + S</kbd> - Use selected
+                                element
+                            </li>
+                            <li><kbd>Escape</kbd> - Clear highlights</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="results-section">
+                <h3>Results:</h3>
+                <div id="status"></div>
+                <div id="results"></div>
+            </div>
+        </div>
+
+        <script src="panel.js"></script>
+    </body>
+</html>

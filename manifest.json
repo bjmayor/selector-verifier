@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "Selector Verifier",
+  "version": "1.0.0",
+  "description": "A Chrome extension to verify and test CSS selectors on web pages",
+  "permissions": ["activeTab", "scripting", "clipboardRead"],
+  "host_permissions": ["<all_urls>"],
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_script.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "devtools_page": "devtools.html",
+  "action": {
+    "default_icon": {
+      "48": "icons/icon48.png"
+    },
+    "default_title": "Selector Verifier"
+  },
+  "icons": {
+    "48": "icons/icon48.png"
+  }
+}
