@@ -1,8 +1,10 @@
 {
   "manifest_version": 3,
-  "name": "Selector Verifier",
+  "name": "CSS Selector Verifier",
   "version": "1.0.0",
-  "description": "A Chrome extension to verify and test CSS selectors on web pages",
+  "description": "Test CSS selectors instantly in DevTools. Highlight elements, auto-detect copied selectors, get detailed info.",
+  "homepage_url": "https://github.com/bjmayor/selector-verifier",
+  "author": "maynard",
   "permissions": ["activeTab", "scripting", "clipboardRead"],
   "host_permissions": ["<all_urls>"],
 
@@ -16,11 +18,18 @@
   "devtools_page": "devtools.html",
   "action": {
     "default_icon": {
-      "48": "icons/icon48.png"
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
     },
-    "default_title": "Selector Verifier"
+    "default_title": "CSS Selector Verifier - Test selectors in DevTools"
   },
   "icons": {
-    "48": "icons/icon48.png"
-  }
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "minimum_chrome_version": "88"
 }
